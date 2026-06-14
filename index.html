@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Focus - Odaklanma & Ambiyans Sesleri</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <!-- Background glow elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header class="app-header">
+        <a href="../index.html" class="back-link">
+            <i data-lucide="arrow-left"></i> Portfolyo Hub
+        </a>
+        <div class="logo-text">
+            <h2>Pomodoro Focus</h2>
+            <span>Odaklanma Sayacı & Doğal Ses Mikseri</span>
+        </div>
+        <button id="theme-toggle" class="btn-icon">
+            <i data-lucide="sun"></i>
+        </button>
+    </header>
+
+    <main class="main-container">
+        <!-- Left Side: Timer & Controls -->
+        <section class="timer-section glass-panel">
+            <div class="timer-modes">
+                <button class="mode-btn active" data-mode="work">Odaklanma</button>
+                <button class="mode-btn" data-mode="short">Kısa Ara</button>
+                <button class="mode-btn" data-mode="long">Uzun Ara</button>
+            </div>
+
+            <div class="timer-display-container">
+                <!-- SVG Progress Circle -->
+                <svg class="progress-ring" width="280" height="280">
+                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.05)" stroke-width="8" fill="transparent" r="130" cx="140" cy="140" />
+                    <circle class="progress-ring__circle" stroke="url(#progress-grad)" stroke-width="8" stroke-dasharray="816.8" stroke-dashoffset="0" stroke-linecap="round" fill="transparent" r="130" cx="140" cy="140" />
+                    <defs>
+                        <linearGradient id="progress-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#818cf8" />
+                            <stop offset="100%" stop-color="#c084fc" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="timer-text">
+                    <span id="time-left">25:00</span>
+                    <span id="current-task-label" class="task-label">Çalışma Zamanı</span>
+                </div>
+            </div>
+
+            <div class="timer-controls">
+                <button id="reset-btn" class="btn btn-secondary" title="Sıfırla">
+                    <i data-lucide="rotate-ccw"></i>
+                </button>
+                <button id="start-btn" class="btn btn-primary btn-lg">
+                    <i data-lucide="play" id="play-icon"></i> Başlat
+                </button>
+                <button id="skip-btn" class="btn btn-secondary" title="Atla">
+                    <i data-lucide="skip-forward"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Right Side: Focus Sounds & Stats -->
+        <section class="dashboard-side">
+            <!-- Soundboard -->
+            <div class="glass-panel soundscape-panel">
+                <h3><i data-lucide="music"></i> Arka Plan Ambiyansı</h3>
+                <p class="panel-desc">Odaklanmanızı artırmak için sesleri karıştırın (Web Audio API ile üretilir).</p>
+                
+                <div class="sound-grid">
+                    <!-- Rain Card -->
+                    <div class="sound-card" data-sound="rain">
+                        <div class="sound-info">
+                            <i data-lucide="cloud-rain" class="sound-icon"></i>
+                            <div>
+                                <span class="sound-name">Yağmur Sesleri</span>
+                                <span class="sound-status">Kapalı</span>
+                            </div>
+                        </div>
+                        <div class="sound-controls-row">
+                            <button class="sound-toggle btn-icon-sm"><i data-lucide="play"></i></button>
+                            <input type="range" class="sound-volume" min="0" max="1" step="0.05" value="0.5">
+                        </div>
+                    </div>
+
+                    <!-- Wind Card -->
+                    <div class="sound-card" data-sound="wind">
+                        <div class="sound-info">
+                            <i data-lucide="wind" class="sound-icon"></i>
+                            <div>
+                                <span class="sound-name">Esinti & Orman</span>
+                                <span class="sound-status">Kapalı</span>
+                            </div>
+                        </div>
+                        <div class="sound-controls-row">
+                            <button class="sound-toggle btn-icon-sm"><i data-lucide="play"></i></button>
+                            <input type="range" class="sound-volume" min="0" max="1" step="0.05" value="0.5">
+                        </div>
+                    </div>
+
+                    <!-- Coffee Shop Card -->
+                    <div class="sound-card" data-sound="cafe">
+                        <div class="sound-info">
+                            <i data-lucide="coffee" class="sound-icon"></i>
+                            <div>
+                                <span class="sound-name">Kafe Uğultusu</span>
+                                <span class="sound-status">Kapalı</span>
+                            </div>
+                        </div>
+                        <div class="sound-controls-row">
+                            <button class="sound-toggle btn-icon-sm"><i data-lucide="play"></i></button>
+                            <input type="range" class="sound-volume" min="0" max="1" step="0.05" value="0.4">
+                        </div>
+                    </div>
+
+                    <!-- White Noise Card -->
+                    <div class="sound-card" data-sound="noise">
+                        <div class="sound-info">
+                            <i data-lucide="radio" class="sound-icon"></i>
+                            <div>
+                                <span class="sound-name">Beyaz Gürültü</span>
+                                <span class="sound-status">Kapalı</span>
+                            </div>
+                        </div>
+                        <div class="sound-controls-row">
+                            <button class="sound-toggle btn-icon-sm"><i data-lucide="play"></i></button>
+                            <input type="range" class="sound-volume" min="0" max="1" step="0.05" value="0.3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats & Settings -->
+            <div class="glass-panel stats-settings-panel">
+                <div class="panel-tabs">
+                    <button class="panel-tab-btn active" data-tab="stats"><i data-lucide="bar-chart-2"></i> İstatistikler</button>
+                    <button class="panel-tab-btn" data-tab="settings"><i data-lucide="sliders"></i> Ayarlar</button>
+                </div>
+
+                <div class="panel-tab-content active" id="tab-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-value" id="stat-sessions">0</span>
+                            <span class="stat-label">Tamamlanan Seans</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="stat-minutes">0 dk</span>
+                            <span class="stat-label">Toplam Odaklanma</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Son 5 Günün Odaklanma Geçmişi</h4>
+                        <div class="bar-chart" id="stats-chart">
+                            <!-- Bars rendered dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-tab-content" id="tab-settings">
+                    <div class="settings-group">
+                        <label>
+                            <span>Çalışma Süresi (Dakika)</span>
+                            <input type="number" id="cfg-work" min="1" max="60" value="25">
+                        </label>
+                        <label>
+                            <span>Kısa Ara Süresi (Dakika)</span>
+                            <input type="number" id="cfg-short" min="1" max="30" value="5">
+                        </label>
+                        <label>
+                            <span>Uzun Ara Süresi (Dakika)</span>
+                            <input type="number" id="cfg-long" min="1" max="60" value="15">
+                        </label>
+                    </div>
+                    <button id="save-settings-btn" class="btn btn-primary btn-full">Ayarları Kaydet</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
